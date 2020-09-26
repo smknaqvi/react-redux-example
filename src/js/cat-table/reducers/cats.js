@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { List, Map } from 'immutable';
 import {
   FAILED,
   STARTED,
@@ -13,7 +13,7 @@ import {
 
 const initialState = Map({
   clientStatus: UNINITIALIZED,
-  data: Map({}),
+  data: Map({ all: List([]) }),
   error: null,
 });
 

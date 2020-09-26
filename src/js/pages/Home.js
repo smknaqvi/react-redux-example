@@ -14,10 +14,12 @@ const Container = styled.div`
 
 const Home = () => {
   const [pastDelay, setPastDelay] = useState(false);
-
+  const unmounted = useRef(false);
   useEffect(() => {
     setTimeout(() => {
-      setPastDelay(true);
+      if (!unmounted.current) {
+        setPastDelay(true);
+      }
     }, 3000);
   }, []);
 

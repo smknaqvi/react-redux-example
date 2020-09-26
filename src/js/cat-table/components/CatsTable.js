@@ -1,40 +1,61 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { PureComponent } from 'react';
 import uniqueId from '@hs/transmute/uniqueId';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-const CatsTable = ({ isLoading, catFacts, getCatFacts }) => {
-  useEffect(() => {
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+`;
+
+class CatsTable extends PureComponent {
+  static propTypes = {
+    isLoading: PropTypes.bool.isRequired,
+    catFacts: PropTypes.object.isRequired,
+    getCatFacts: PropTypes.func.isRequired,
+  };
+
+  state = {};
+
+  componentDidMount() {
+    const { getCatFacts } = this.props;
     getCatFacts();
-  }, []);
+  }
 
-  const catFactsJSON = useMemo(() => !isLoading && catFacts.toJS(), [
-    catFacts,
-    isLoading,
-  ]);
+  renderRows() {
+    const { catFacts } = this.props;
+    return catFacts.map((cat) => (
+      <tr key={uniqueId(cat.get('id'))}>
+        <td>{cat.get('text')}</td>
+        <td>{cat.get('upvotes')}</td>
+      </tr>
+    ));
+  }
 
-  return (
-    !isLoading && (
+  render() {
+    const { isLoading } = this.props;
+    if (isLoading) {
+      return (
+        <Container>
+          <CircularProgress />
+        </Container>
+      );
+    }
+
+    return (
       <table>
         <tr>
           <th>Cat Fact</th>
           <th>Upvotes</th>
         </tr>
-        <tbody>
-          {catFactsJSON.map((cat) => (
-            <tr key={uniqueId(cat.id)}>
-              <td>{cat.text}</td>
-              <td>{cat.upvotes}</td>
-            </tr>
-          ))}
-        </tbody>
+        <tbody>{this.renderRows()}</tbody>
       </table>
-    )
-  );
-};
+    );
+  }
+}
 
-CatsTable.prototypes = {
-  isLoading: PropTypes.bool.isRequired,
-  catFacts: PropTypes.object.isRequired,
-  getCatFacts: PropTypes.func.isRequired,
-};
 export default CatsTable;

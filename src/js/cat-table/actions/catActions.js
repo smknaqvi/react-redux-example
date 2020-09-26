@@ -1,5 +1,9 @@
 import { requestFn } from '../client/catsClient';
-import { FETCH_CAT_FACTS_FAILED, FETCH_CAT_FACTS_STARTED, FETCH_CAT_FACTS_SUCCEEDED } from './actionTypes';
+import {
+  FETCH_CAT_FACTS_FAILED,
+  FETCH_CAT_FACTS_STARTED,
+  FETCH_CAT_FACTS_SUCCEEDED,
+} from './actionTypes';
 
 export const getCatFacts = () => (dispatch) => {
   dispatch({

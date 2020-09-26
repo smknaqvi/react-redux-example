@@ -1,33 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import styled from 'styled-components';
-import '../styles/styles.css';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Table from './pages/Table';
-
-const StyledLink = styled(Link)`
-  padding: 10px 20px 10px 0px;
-  color: white;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-`;
+import NavBar from './nav-bar/components/NavBar';
+import '../styles/styles.css';
 
 const App = ({ store }) => {
   return (
     <Provider store={store}>
       <Router>
-        <AppBar position="static">
-          <Toolbar>
-            <StyledLink to="/">Home</StyledLink>
-            <StyledLink to="/table">Table</StyledLink>
-          </Toolbar>
-        </AppBar>
+        <NavBar />
         <Switch>
           <Route path="/table" component={Table} />
           <Route path="/" component={Home} />
